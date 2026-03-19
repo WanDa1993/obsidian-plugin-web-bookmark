@@ -3,6 +3,7 @@ import {SETTINGS, WebBookmarkPluginSettings, WebBookmarkSettingsTab} from "./set
 import {WebBookmarkModal} from "./modal";
 
 interface BookmarkBean {
+
 	/**
 	 * 链接
 	 */
@@ -153,7 +154,14 @@ export default class WebBookmarkPlugin extends Plugin {
 
 		// 链接图标
 		const iconEl = linkEl.createSpan({cls: 'web-bookmark-card-icon'})
-		setIcon(iconEl, 'link')
+		const fileType = this.getFileType(source.link)
+		if (fileType === '.pdf') {
+			setIcon(iconEl, 'file-text')
+		} else if (fileType === '.zip') {
+			setIcon(iconEl, 'file-archive')
+		} else {
+			setIcon(iconEl, 'link')
+		}
 		// 链接文本
 		linkEl.createDiv({
 			cls: 'web-bookmark-card-link-text',
@@ -207,6 +215,21 @@ export default class WebBookmarkPlugin extends Plugin {
 			return url.hostname
 		} catch (e) {
 			return link
+		}
+	}
+
+	/**
+	 * 获取链接的文件类型
+	 */
+	private getFileType(link: string): string {
+		try {
+			const url = new URL(link)
+			const path = url.pathname
+			const lastDotIndex = path.lastIndexOf(".")
+			if (lastDotIndex === -1) return ""
+			return path.slice(lastDotIndex).toLowerCase()
+		} catch (e) {
+			return ""
 		}
 	}
 
