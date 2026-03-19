@@ -5,9 +5,9 @@ import {App, Modal} from "obsidian";
  */
 export class WebBookmarkModal extends Modal {
 
-	private readonly callback: (link: string) => void;
+	private readonly callback: (title: string, link: string) => void;
 
-	constructor(app: App, callback: (link: string) => void) {
+	constructor(app: App, callback: (title: string, link: string) => void) {
 		super(app)
 		this.callback = callback
 	}
@@ -18,16 +18,26 @@ export class WebBookmarkModal extends Modal {
 		modalEl.addClass('web-bookmark-modal')
 		contentEl.empty()
 
-		// 输入框
 		const formEl = contentEl.createEl('form', {
 			cls: 'web-bookmark-modal-form'
 		})
-		const inputEl = formEl.createEl('input', {
+		// 标题输入框
+		const inputTitleEl = formEl.createEl('input', {
+			cls: 'web-bookmark-modal-input',
+			placeholder: 'Enter title (optional)',
+			value: ""
+		})
+		inputTitleEl.maxLength = 100
+
+		// 链接输入框
+		const inputLinkEl = formEl.createEl('input', {
 			cls: 'web-bookmark-modal-input',
 			type: 'url',
 			placeholder: 'Paste in https://...',
 			value: ""
 		})
+
+		inputLinkEl.maxLength = 200
 
 		// 描述信息
 		formEl.createEl('p', {
@@ -45,16 +55,17 @@ export class WebBookmarkModal extends Modal {
 		// 按钮点击事件
 		formEl.addEventListener('submit', (event) => {
 			event.preventDefault()
-			const content = inputEl.value.trim();
+			const title = inputTitleEl.value.trim()
+			const content = inputLinkEl.value.trim();
 			if (content.length > 0) {
-				this.callback(content)
+				this.callback(title, content)
 			}
 			this.close()
 		})
 
 		window.setTimeout(() => {
-			inputEl.focus()
-			inputEl.select()
+			inputLinkEl.focus()
+			inputLinkEl.select()
 		}, 10)
 	}
 

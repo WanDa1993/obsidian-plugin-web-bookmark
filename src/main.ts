@@ -29,13 +29,13 @@ export default class WebBookmarkPlugin extends Plugin {
 			id: "insert_web_bookmark_template",
 			name: "Add a web bookmark",
 			editorCallback: (editor: Editor) => {
-				const modal = new WebBookmarkModal(this.app, (link) => {
+				const modal = new WebBookmarkModal(this.app, (title, link) => {
 					// 校验输入内容
 					if (!URL.canParse(link)) {
 						new Notice("Please enter a valid URL.")
 						return
 					}
-					const block = this.buildBookmarkBlock(link)
+					const block = this.buildBookmarkBlock(title, link)
 					const cursor = editor.getCursor('from')
 					editor.replaceSelection(`${block}`)
 					editor.setCursor({
@@ -75,13 +75,13 @@ export default class WebBookmarkPlugin extends Plugin {
 	/**
 	 * 创建 Bookmark 代码块
 	 */
-	private buildBookmarkBlock(link: string): string {
-		const trim = link.trim()
-		const label = this.getHostname(link)
+	private buildBookmarkBlock(title: string, link: string): string {
+		const bookmarkLink = link.trim()
+		const bookmarkTitle = title || this.getHostname(link)
 		const code = [
 			'```web_bookmark_block',
-			`link: ${trim}`,
-			`title: ${label}`,
+			`link: ${bookmarkLink}`,
+			`title: ${bookmarkTitle}`,
 			'```'
 		].join('\n')
 		return `${code}\n`
