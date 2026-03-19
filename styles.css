@@ -10,14 +10,6 @@
 	display: none;
 }
 
-.web-bookmark-modal-title {
-	width: 100%;
-	font-size: 20px;
-	font-weight: bold;
-	color: var(--text-normal);
-	text-align: center;
-}
-
 .web-bookmark-modal-input {
 	margin-top: 16px;
 	width: 100%;
@@ -64,6 +56,7 @@
 	text-overflow: ellipsis;
 }
 
+
 .web-bookmark-card-link {
 	margin-top: 10px;
 	text-decoration: none;
@@ -77,7 +70,7 @@
 	line-height: 0;
 }
 
-.web-bookmark-card-icon svg{
+.web-bookmark-card-icon svg {
 	width: 16px;
 	height: 16px;
 }
@@ -86,6 +79,34 @@
 	text-transform: lowercase;
 	font-size: 12px;
 	color: var(--text-muted);
+	word-break: break-all;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.web-bookmark-card-error {
+	width: 100%;
+	margin-top: 10px;
+	display: flex;
+}
+
+.web-bookmark-card-error-icon {
+	padding-right: 5px;
+	display: inline-flex;
+	align-items: center;
+	line-height: 0;
+}
+
+.web-bookmark-card-error-icon svg{
+	width: 16px;
+	height: 16px;
+	color: var(--background-modifier-error);
+}
+
+.web-bookmark-card-error-text {
+	font-size: 12px;
+	color: var(--background-modifier-error);
 	word-break: break-all;
 	white-space: nowrap;
 	overflow: hidden;

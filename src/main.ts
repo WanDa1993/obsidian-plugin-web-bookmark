@@ -30,7 +30,7 @@ export default class WebBookmarkPlugin extends Plugin {
 			editorCallback: (editor: Editor) => {
 				const modal = new WebBookmarkModal(this.app, (link) => {
 					// 校验输入内容
-					if (!this.isValidLink(link)) {
+					if (!URL.canParse(link)) {
 						new Notice("Please enter a valid URL.")
 						return
 					}
@@ -123,13 +123,25 @@ export default class WebBookmarkPlugin extends Plugin {
 	}
 
 	/**
-	 * 创建 Bookmark 卡片
+	 * 创建 Bookmark
 	 */
 	private generateBookmark(source: BookmarkBean, el: HTMLElement) {
 		const cardEl = el.createDiv({cls: 'web-bookmark-card'})
 		// 标题区域
 		const titleEl = cardEl.createDiv({cls: 'web-bookmark-card-title'})
 		titleEl.setText(source.title || "")
+		// 根据不同的状态,生成不同的布局样式
+		if (!URL.canParse(source.link)) {
+			this.generateErrorLayout(cardEl)
+		} else {
+			this.generateBookmarkLayout(source, cardEl)
+		}
+	}
+
+	/**
+	 * 创建 Bookmark 卡片布局
+	 */
+	private generateBookmarkLayout(source: BookmarkBean, cardEl: HTMLElement) {
 		// 链接区域
 		const linkEl = cardEl.createEl('a', {
 			cls: 'web-bookmark-card-link',
@@ -174,15 +186,15 @@ export default class WebBookmarkPlugin extends Plugin {
 	}
 
 	/**
-	 * 检查 Link 符合 https:// | http://
+	 * 创建 Bookmark 错误样式
 	 */
-	private isValidLink(content: string): Boolean {
-		try {
-			const url = new URL(content)
-			return url.protocol === 'http:' || url.protocol === 'https:'
-		} catch (e) {
-			return false
-		}
+	private generateErrorLayout(cardEl: HTMLElement) {
+		const errorEl = cardEl.createDiv({cls: 'web-bookmark-card-error'})
+		// 错误图标
+		const iconEl = errorEl.createSpan({cls: 'web-bookmark-card-error-icon'})
+		setIcon(iconEl, 'link')
+		// 错误文本
+		errorEl.createDiv({cls: 'web-bookmark-card-error-text', text: 'Invalid link'})
 	}
 
 	/**
