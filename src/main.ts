@@ -129,11 +129,12 @@ export default class WebBookmarkPlugin extends Plugin {
 		const cardEl = el.createDiv({cls: 'web-bookmark-card'})
 		// 标题区域
 		const titleEl = cardEl.createDiv({cls: 'web-bookmark-card-title'})
-		titleEl.setText(source.title || "")
 		// 根据不同的状态,生成不同的布局样式
 		if (!URL.canParse(source.link)) {
+			titleEl.setText('Invalid link')
 			this.generateErrorLayout(cardEl)
 		} else {
+			titleEl.setText(source.title || "")
 			this.generateBookmarkLayout(source, cardEl)
 		}
 	}
