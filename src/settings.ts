@@ -1,36 +1,67 @@
 import {App, PluginSettingTab, Setting} from "obsidian";
-import MyPlugin from "./main";
+import WebBookmarkPlugin from "./main";
 
-export interface MyPluginSettings {
-	mySetting: string;
+export interface WebBookmarkPluginSettings {
+
+	/**
+	 * 默认URL
+	 */
+	defaultUrl: string
+
+	/**
+	 * 默认标题
+	 */
+	defaultTitle: string
+
 }
 
-export const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+/**
+ * 默认配置项
+ */
+export const SETTINGS: WebBookmarkPluginSettings = {
 
-export class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	defaultUrl: "https://example.com",
 
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
+	defaultTitle: "Web bookmark"
+};
+
+export class WebBookmarkSettingsTab extends PluginSettingTab {
+	plugin: WebBookmarkPlugin
+
+	constructor(app: App, plugin: WebBookmarkPlugin) {
+		super(app, plugin)
+		this.plugin = plugin
 	}
 
 	display(): void {
-		const {containerEl} = this;
+		const {containerEl} = this
+		containerEl.empty()
 
-		containerEl.empty();
-
+		// 设置项: 默认标签
 		new Setting(containerEl)
-			.setName('Settings #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
+			.setName("Default bookmark title")
+			.setDesc("Set the default title for bookmarks")
+			.addText((text) => {
+				text.setPlaceholder(SETTINGS.defaultTitle)
+				text.setValue(this.plugin.settings.defaultTitle)
+				text.onChange(async (value) => {
+					this.plugin.settings.defaultTitle = value.trim() || SETTINGS.defaultTitle
+					await this.plugin.saveSettings()
+				})
+			});
+
+		// 设置项: 默认URL
+		new Setting(containerEl)
+			.setName("Default URL template")
+			.setDesc("Set the default url template for bookmarks")
+			.addText((text) => {
+				text.setPlaceholder(SETTINGS.defaultUrl)
+				text.setValue(this.plugin.settings.defaultUrl)
+				text.onChange(async (value) => {
+					this.plugin.settings.defaultUrl = value.trim() || SETTINGS.defaultUrl
+					await this.plugin.saveSettings()
+				})
+			})
 	}
 }
+

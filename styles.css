@@ -1,8 +1,93 @@
-/*
+.web-bookmark-modal {
+	padding: 0 24px;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.web-bookmark-modal .modal-close-button {
+	display: none;
+}
 
-If your plugin does not need CSS, delete this file.
+.web-bookmark-modal .modal-header {
+	display: none;
+}
 
-*/
+.web-bookmark-modal-title {
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	color: var(--text-normal);
+	text-align: center;
+}
+
+.web-bookmark-modal-input {
+	margin-top: 16px;
+	width: 100%;
+	padding: 16px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	font-size: 16px;
+	background: var(--background-primary);
+}
+
+.web-bookmark-modal-input:focus,
+.web-bookmark-modal-input:focus-visible {
+	border-color: var(--interactive-accent);
+}
+
+.web-bookmark-modal-desc {
+	margin: 10px 0;
+	width: 100%;
+	text-align: left;
+	font-size: 12px;
+}
+
+.web-bookmark-modal-button {
+	width: 100%;
+	height: 36px;
+	margin-bottom: 16px;
+}
+
+.web-bookmark-card {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	/*background: linear-gradient(135deg, var(--background-secondary), var(--background-primary));*/
+	background: var(--background-primary);
+	padding: 16px;
+}
+
+.web-bookmark-card-title {
+	font-size: 14px;
+	text-transform: lowercase;
+	color: var(--text-normal);
+	max-width: 220px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.web-bookmark-card-link {
+	margin-top: 10px;
+	text-decoration: none;
+	display: flex;
+}
+
+.web-bookmark-card-icon {
+	padding-right: 5px;
+	display: inline-flex;
+	align-items: center;
+	line-height: 0;
+}
+
+.web-bookmark-card-icon svg{
+	width: 16px;
+	height: 16px;
+}
+
+.web-bookmark-card-link-text {
+	text-transform: lowercase;
+	font-size: 12px;
+	color: var(--text-muted);
+	word-break: break-all;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
