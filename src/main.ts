@@ -1,6 +1,6 @@
 import {Editor, Menu, Notice, Plugin, setIcon} from 'obsidian';
-import {SETTINGS, WebBookmarkPluginSettings, WebBookmarkSettingsTab} from "./settings";
 import {WebBookmarkModal} from "./modal";
+import iconAndroid from "./assets/ic_android.svg"
 
 interface BookmarkBean {
 
@@ -18,11 +18,7 @@ interface BookmarkBean {
 
 export default class WebBookmarkPlugin extends Plugin {
 
-	settings: WebBookmarkPluginSettings;
-
 	async onload() {
-		// 加载配置
-		await this.loadSettings()
 
 		// 添加指令: 插入书签
 		this.addCommand({
@@ -52,25 +48,7 @@ export default class WebBookmarkPlugin extends Plugin {
 			this.renderBookmarkBlock(source, el)
 		})
 
-		// 添加设置
-		this.addSettingTab(new WebBookmarkSettingsTab(this.app, this))
 	}
-
-	/**
-	 * 加载"插件设置项"
-	 */
-	async loadSettings() {
-		this.settings = Object.assign({}, SETTINGS, await this.loadData() as Partial<WebBookmarkPluginSettings>)
-	}
-
-	/**
-	 * 保存"插件设置项"
-	 */
-	async saveSettings() {
-		await this.saveData(this.settings)
-		this.app.workspace.updateOptions()
-	}
-
 
 	/**
 	 * 创建 Bookmark 代码块
@@ -159,6 +137,8 @@ export default class WebBookmarkPlugin extends Plugin {
 			setIcon(iconEl, 'file-text')
 		} else if (fileType === '.zip') {
 			setIcon(iconEl, 'file-archive')
+		} else if (fileType === '.apk') {
+			iconEl.innerHTML = iconAndroid
 		} else {
 			setIcon(iconEl, 'link')
 		}

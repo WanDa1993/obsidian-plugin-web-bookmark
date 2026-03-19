@@ -68,6 +68,7 @@
 	display: inline-flex;
 	align-items: center;
 	line-height: 0;
+	color: var(--interactive-accent);
 }
 
 .web-bookmark-card-icon svg {
@@ -96,12 +97,12 @@
 	display: inline-flex;
 	align-items: center;
 	line-height: 0;
+	color: var(--background-modifier-error);
 }
 
 .web-bookmark-card-error-icon svg{
 	width: 16px;
 	height: 16px;
-	color: var(--background-modifier-error);
 }
 
 .web-bookmark-card-error-text {
