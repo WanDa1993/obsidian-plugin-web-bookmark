@@ -224,5 +224,4 @@ export default class WebBookmarkPlugin extends Plugin {
 			new Notice("Copy failed");
 		}
 	}
-
 }

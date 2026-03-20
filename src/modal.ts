@@ -37,8 +37,6 @@ export class WebBookmarkModal extends Modal {
 			value: ""
 		})
 
-		inputLinkEl.maxLength = 200
-
 		// 描述信息
 		formEl.createEl('p', {
 			cls: 'web-bookmark-modal-desc',
