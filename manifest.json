@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-plugin-web-bookmark",
-	"name": "Web Bookmark",
+	"id": "obsidian-plugin-card-bookmark",
+	"name": "Card Bookmark",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Turn plain URLs into rich card-style bookmarks.",
+	"description": "Create rich card-style bookmarks for URLs and files.",
 	"author": "Obsidian",
 	"authorUrl": "https://github.com/WanDa1993",
 	"fundingUrl": "",
