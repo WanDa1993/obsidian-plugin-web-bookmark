@@ -3,7 +3,7 @@ import {App, Modal} from "obsidian";
 /**
  * 创建Web Bookmark 的对话框
  */
-export class WebBookmarkModal extends Modal {
+export class LinkBookmarkModal extends Modal {
 
 	private readonly callback: (title: string, link: string) => void;
 
