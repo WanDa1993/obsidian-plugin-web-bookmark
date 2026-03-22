@@ -1,5 +1,5 @@
 import {Editor, Menu, Notice, Plugin, setIcon} from "obsidian";
-import {LinkBookmarkModal} from "./modal";
+import {CreateLinkBookmarkModal} from "./modal";
 import iconAndroid from "./assets/ic_android.svg"
 
 interface LinkBookmarkBean {
@@ -31,8 +31,8 @@ export default class LinkBookmarkFeature {
 			id: "insert_link_bookmark_template",
 			name: "Add a link bookmark",
 			editorCallback: (editor: Editor) => {
-				const modal = new LinkBookmarkModal(this.plugin.app, (title, link) => {
-					// 校验输入内容
+				const modal = new CreateLinkBookmarkModal(this.plugin.app, (title, link) => {
+					// 校验输入链接
 					if (!URL.canParse(link)) {
 						new Notice("Please enter a valid URL.")
 						return
@@ -49,7 +49,7 @@ export default class LinkBookmarkFeature {
 			}
 		})
 
-		// 添加处理器: 专门处理"web_bookmark_block"
+		// 添加处理器: 专门处理"link_bookmark_block"
 		this.plugin.registerMarkdownCodeBlockProcessor('link_bookmark_block', (source, el) => {
 			this.renderLinkBookmarkBlock(source, el)
 		})
@@ -112,7 +112,10 @@ export default class LinkBookmarkFeature {
 	private generateLinkBookmark(source: LinkBookmarkBean, el: HTMLElement) {
 		const cardEl = el.createDiv({cls: 'bookmark-card'})
 		// 标题区域
-		const titleEl = cardEl.createDiv({cls: 'bookmark-card-title'})
+		const topEl = cardEl.createDiv({cls: 'bookmark-card-top'})
+		const titleEl = topEl.createDiv({cls: 'bookmark-card-title'})
+		const typeEl = topEl.createDiv({cls: 'bookmark-card-type'})
+		typeEl.setText("Link")
 		// 根据不同的状态,生成不同的布局样式
 		if (!URL.canParse(source.link)) {
 			titleEl.setText('Invalid link')
@@ -149,7 +152,7 @@ export default class LinkBookmarkFeature {
 		}
 		// 链接文本
 		linkEl.createDiv({
-			cls: 'bookmark-card-link-text',
+			cls: 'bookmark-card-text',
 			text: source.link
 		})
 
@@ -180,7 +183,7 @@ export default class LinkBookmarkFeature {
 	}
 
 	/**
-	 * 创建 Bookmark 错误样式
+	 * 创建 Link Bookmark 错误样式
 	 */
 	private generateErrorLayout(cardEl: HTMLElement) {
 		const errorEl = cardEl.createDiv({cls: 'bookmark-card-error'})
