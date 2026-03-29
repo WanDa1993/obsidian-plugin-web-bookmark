@@ -1,90 +1,106 @@
-# Obsidian Sample Plugin
+# Card Bookmark
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+Card Bookmark 是一个 Obsidian 插件，用于把链接和库内文件制作成卡片式书签。
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+它提供两类书签：
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open modal (simple)" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- 链接书签：为一个 URL 插入代码块，并渲染为卡片。
+- 文件书签：为一个 vault 相对路径插入代码块，并渲染为卡片。
 
-## First time developing plugins?
+插件还提供可选的文件栏点击拦截功能，可以按文件扩展名阻止单击或双击打开。
 
-Quick starting guide for new plugin devs:
+## 功能
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+- 从 URL 创建链接书签。
+- 从 vault 相对路径创建文件书签。
+- 在阅读视图中把书签代码块渲染成卡片。
+- 通过卡片右键菜单复制链接或标题。
+- 从文件书签卡片中在系统文件管理器里定位文件，或用关联应用打开文件。
+- 按扩展名阻止文件栏中的单击或双击打开行为。
 
-## Releasing new releases
+## 安装
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+1. 使用 `npm run build` 构建插件。
+2. 将 `main.js`、`manifest.json` 和 `styles.css` 复制到：
+   `<Vault>/.obsidian/plugins/obsidian-plugin-card-bookmark/`
+3. 重新加载 Obsidian，并在 **Settings → Community plugins** 中启用插件。
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## 开发
 
-## Adding your plugin to the community plugin list
-
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## How to use
-
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- This project already has eslint preconfigured, you can invoke a check by running`npm run lint`
-- Together with a custom eslint [plugin](https://github.com/obsidianmd/eslint-plugin) for Obsidan specific code guidelines.
-- A GitHub action is preconfigured to automatically lint every commit on all branches.
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+```bash
+npm install
+npm run dev
 ```
 
-If you have multiple URLs, you can also do:
+常用脚本：
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+- `npm run dev`：监听构建
+- `npm run build`：生产构建
+- `npm run lint`：代码检查
+- `npm run version`：提升插件版本并更新发布元数据
+
+## 使用方法
+
+### 链接书签
+
+1. 打开命令面板。
+2. 执行 `Add a link bookmark`。
+3. 输入可选标题和一个有效的 URL。
+4. 将生成的 `link_bookmark_block` 代码块插入笔记。
+
+示例：
+
+````markdown
+```link_bookmark_block
+link: https://example.com
+title: Example
 ```
+````
 
-## API Documentation
+### 文件书签
 
-See https://docs.obsidian.md
+1. 打开命令面板。
+2. 执行 `Add a file bookmark`。
+3. 输入可选标题和一个 vault 相对路径。
+4. 将生成的 `file_bookmark_block` 代码块插入笔记。
+
+示例：
+
+````markdown
+```file_bookmark_block
+path: Projects/notes/example.md
+title: Example note
+```
+````
+
+### 文件栏点击拦截
+
+插件可以按扩展名阻止文件栏中文件的打开行为。
+
+- 开启单击拦截后，可阻止单击打开。
+- 开启双击拦截后，可阻止双击打开。
+- 扩展名使用英文逗号分隔，例如 `pdf,zip,apk`。
+
+## 说明
+
+- 文件定位和外部打开依赖桌面端 API。
+- 插件围绕 Obsidian 的本地 vault 数据设计，不依赖云服务。
+- 书签代码块名称属于稳定约定，非必要不要更改，否则旧笔记需要迁移。
+
+## 项目结构
+
+- `src/main.ts`：插件生命周期和功能注册
+- `src/link_bookmark.ts`：链接书签命令与渲染
+- `src/file_bookmark.ts`：文件书签命令与渲染
+- `src/file_click_interceptor.ts`：文件栏点击拦截
+- `src/settings.ts`：设置模型和设置页
+- `src/modal.ts`：书签创建弹窗
+- `src/assets/`：插件使用的静态资源
+
+## 发布
+
+准备发布时：
+
+1. 更新 `manifest.json` 和必要的版本元数据。
+2. 运行 `npm run build`。
+3. 发布 `main.js`、`manifest.json`，以及存在时的 `styles.css`。
