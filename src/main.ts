@@ -34,8 +34,6 @@ export default class BookmarkPlugin extends Plugin {
 		await this.fileClickInterceptorFeature.onload()
 		await this.linkBookmarkFeature.onload()
 		await this.fileBookmarkFeature.onload()
-
-
 	}
 
 }

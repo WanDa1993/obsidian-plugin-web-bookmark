@@ -11,7 +11,7 @@ export default class FileClickInterceptor {
 
 	async onload() {
 		this.plugin.registerDomEvent(document, "click", (event: MouseEvent) => {
-			// 检测拦截功能开关
+			// 检测单击拦截功能开关
 			if (!this.plugin.settings.isEnableFileClickInterceptFeature) {
 				return;
 			}
@@ -24,7 +24,15 @@ export default class FileClickInterceptor {
 				return;
 			}
 			// 非鼠标左键单击时,无须处理
-			if (event.button !== 0 || event.detail !== 1) {
+			if (event.button !== 0) {
+				return;
+			}
+			// 除单击、双击外,其他无须处理
+			if (event.detail > 2) {
+				return;
+			}
+			// 检测双击拦截功能开关
+			if (event.detail == 2 && !this.plugin.settings.isEnableFileDoubleInterceptFeature) {
 				return;
 			}
 			const target = event.target;

@@ -4,9 +4,14 @@ import type BookmarkPlugin from "./main";
 export interface BookmarkSettings {
 
 	/**
-	 * 是否开启非md,文件点击拦截功能
+	 * 是否开启文件单击拦截功能(非markdown格式)
 	 */
 	isEnableFileClickInterceptFeature: boolean;
+
+	/**
+	 * 是否开启文件双击拦截功能(非markdown格式)
+	 */
+	isEnableFileDoubleInterceptFeature: boolean;
 
 	/**
 	 * 指定阻止打开的文件扩展名,用逗号分隔
@@ -18,6 +23,8 @@ export interface BookmarkSettings {
 export const DEFAULT_SETTINGS: BookmarkSettings = {
 
 	isEnableFileClickInterceptFeature: false,
+
+	isEnableFileDoubleInterceptFeature: false,
 
 	blockedFileExtensions: "",
 
@@ -36,7 +43,6 @@ export class CardBookmarkSettingTab extends PluginSettingTab {
 		const {containerEl} = this;
 		containerEl.empty();
 		containerEl.createEl("h2", {text: "Card Bookmark"});
-
 		// 功能: 单击打开文件功能拦截
 		new Setting(containerEl)
 			.setName("Enable file click interceptor")
@@ -47,7 +53,16 @@ export class CardBookmarkSettingTab extends PluginSettingTab {
 					this.plugin.settings.isEnableFileClickInterceptFeature = value;
 					await this.plugin.saveData(this.plugin.settings);
 				}));
-
+		// 功能: 双击打开文件功能拦截
+		new Setting(containerEl)
+			.setName("Enable file double click interceptor")
+			.setDesc("Prevent files whose extensions match the list below from opening on double click.")
+			.addToggle((toggle) => toggle
+				.setValue(this.plugin.settings.isEnableFileDoubleInterceptFeature)
+				.onChange(async (value) => {
+					this.plugin.settings.isEnableFileDoubleInterceptFeature = value;
+					await this.plugin.saveData(this.plugin.settings);
+				}));
 		// 功能: 指定阻止打开的文件类型
 		new Setting(containerEl)
 			.setName("Blocked file extensions")
