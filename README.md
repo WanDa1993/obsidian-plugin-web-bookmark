@@ -1,52 +1,21 @@
 # Card Bookmark
 
-Card Bookmark 是一个 Obsidian 插件，用于把链接和库内文件制作成卡片式书签。
+Card Bookmark 是一个 Obsidian 插件，用于把链接和文件路径制作成卡片式书签
 
-它提供两类书签：
+它主要有以下三个功能：
 
-- 链接书签：为一个 URL 插入代码块，并渲染为卡片。
-- 文件书签：为一个 vault 相对路径插入代码块，并渲染为卡片。
-
-插件还提供可选的文件栏点击拦截功能，可以按文件扩展名阻止单击或双击打开。
-
-## 功能
-
-- 从 URL 创建链接书签。
-- 从 vault 相对路径创建文件书签。
-- 在阅读视图中把书签代码块渲染成卡片。
-- 通过卡片右键菜单复制链接或标题。
-- 从文件书签卡片中在系统文件管理器里定位文件，或用关联应用打开文件。
-- 按扩展名阻止文件栏中的单击或双击打开行为。
-
-## 安装
-
-1. 使用 `npm run build` 构建插件。
-2. 将 `main.js`、`manifest.json` 和 `styles.css` 复制到：
-   `<Vault>/.obsidian/plugins/obsidian-plugin-card-bookmark/`
-3. 重新加载 Obsidian，并在 **Settings → Community plugins** 中启用插件。
-
-## 开发
-
-```bash
-npm install
-npm run dev
-```
-
-常用脚本：
-
-- `npm run dev`：监听构建
-- `npm run build`：生产构建
-- `npm run lint`：代码检查
-- `npm run version`：提升插件版本并更新发布元数据
+- 链接书签：将一个 URL 插入代码块，并渲染为卡片
+- 文件书签：将一个基于 vault 的相对路径插入代码块，并渲染为卡片
+- 文件栏打开事件拦截：指定文件类型阻止其打开事件类型
 
 ## 使用方法
 
 ### 链接书签
 
 1. 打开命令面板。
-2. 执行 `Add a link bookmark`。
-3. 输入可选标题和一个有效的 URL。
-4. 将生成的 `link_bookmark_block` 代码块插入笔记。
+2. 执行 `Add a link bookmark`
+3. 输入可选标题和一个有效的 URL
+4. 将生成的 `link_bookmark_block` 代码块插入笔记
 
 示例：
 
@@ -57,12 +26,14 @@ title: Example
 ```
 ````
 
+![Link bookmark example](./example_link_bookmark.png)
+
 ### 文件书签
 
 1. 打开命令面板。
-2. 执行 `Add a file bookmark`。
-3. 输入可选标题和一个 vault 相对路径。
-4. 将生成的 `file_bookmark_block` 代码块插入笔记。
+2. 执行 `Add a file bookmark`
+3. 输入可选标题和一个基于 vault 的相对路径
+4. 将生成的 `file_bookmark_block` 代码块插入笔记
 
 示例：
 
@@ -73,19 +44,25 @@ title: Example note
 ```
 ````
 
-### 文件栏点击拦截
+![File bookmark example](./example_file_bookmark.png)
 
-插件可以按扩展名阻止文件栏中文件的打开行为。
+### 文件栏打开事件拦截
 
-- 开启单击拦截后，可阻止单击打开。
-- 开启双击拦截后，可阻止双击打开。
-- 扩展名使用英文逗号分隔，例如 `pdf,zip,apk`。
+插件可以根据文件类型阻止其文件栏中的打开行为
 
-## 说明
+- 开启单击拦截后，可阻止单击打开事件
+- 开启双击拦截后，可阻止双击打开事件
+- 扩展名使用英文逗号分隔，例如 `pdf,zip,apk`
 
-- 文件定位和外部打开依赖桌面端 API。
-- 插件围绕 Obsidian 的本地 vault 数据设计，不依赖云服务。
-- 书签代码块名称属于稳定约定，非必要不要更改，否则旧笔记需要迁移。
+![File interceptor example](./example_file_interceptor.png)
+
+## 提示
+
+- 快捷键：给两种书签设置指定的快捷键，可以大幅提升创建效率
+- 文件书签：文件书签只支持 vault 内部的文件，当根据路径无法找到对应文件时，会提示"invalid path"
+- 复制文件路径：右键点击文件 - Copy path - from vault folder，即可快速复制文件路径
+- 拦截功能：单击文件、双击文件、文件类型都支持配置
+
 
 ## 项目结构
 
@@ -97,10 +74,3 @@ title: Example note
 - `src/modal.ts`：书签创建弹窗
 - `src/assets/`：插件使用的静态资源
 
-## 发布
-
-准备发布时：
-
-1. 更新 `manifest.json` 和必要的版本元数据。
-2. 运行 `npm run build`。
-3. 发布 `main.js`、`manifest.json`，以及存在时的 `styles.css`。
