@@ -25,7 +25,7 @@ export default class LinkBookmarkFeature {
 		this.plugin = plugin
 	}
 
-	async onload() {
+	onload() {
 		// 添加指令: 插入书签
 		this.plugin.addCommand({
 			id: "insert_link_bookmark_template",

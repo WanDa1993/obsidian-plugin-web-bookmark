@@ -24,7 +24,7 @@ export default class FileBookmarkFeature {
 		this.plugin = plugin
 	}
 
-	async onload() {
+	onload() {
 		// 添加指令: 插入书签
 		this.plugin.addCommand({
 			id: "insert_file_bookmark_template",
@@ -46,7 +46,6 @@ export default class FileBookmarkFeature {
 					})
 				})
 				modal.open()
-
 			}
 		})
 

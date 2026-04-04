@@ -9,7 +9,7 @@ export default class FileClickInterceptor {
 		this.plugin = plugin;
 	}
 
-	async onload() {
+	onload() {
 		this.plugin.registerDomEvent(document, "click", (event: MouseEvent) => {
 			// 检测单击拦截功能开关
 			if (!this.plugin.settings.isEnableFileClickInterceptFeature) {

@@ -31,9 +31,9 @@ export default class BookmarkPlugin extends Plugin {
 		this.addSettingTab(new CardBookmarkSettingTab(this.app, this));
 
 		// 功能加载
-		await this.fileClickInterceptorFeature.onload()
-		await this.linkBookmarkFeature.onload()
-		await this.fileBookmarkFeature.onload()
+		this.fileClickInterceptorFeature.onload()
+		this.linkBookmarkFeature.onload()
+		this.fileBookmarkFeature.onload()
 	}
 
 }
