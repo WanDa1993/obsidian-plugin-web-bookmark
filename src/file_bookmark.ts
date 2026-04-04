@@ -229,7 +229,7 @@ export default class FileBookmarkFeature {
 				return mdTarget
 			}
 			return null
-		} catch (e) {
+		} catch {
 			return null
 		}
 	}

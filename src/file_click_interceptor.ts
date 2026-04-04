@@ -60,7 +60,7 @@ export default class FileClickInterceptor {
 			}
 			const extension = file.extension.toLowerCase()
 			const blockedExtensions = this.getBlockedExtensions()
-			if (!blockedExtensions.contains(extension)) {
+			if (!blockedExtensions.includes(extension)) {
 				return;
 			}
 			event.preventDefault();

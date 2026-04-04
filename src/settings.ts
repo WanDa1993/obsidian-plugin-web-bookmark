@@ -42,7 +42,9 @@ export class CardBookmarkSettingTab extends PluginSettingTab {
 	display(): void {
 		const {containerEl} = this;
 		containerEl.empty();
-		containerEl.createEl("h2", {text: "Card Bookmark"});
+		new Setting(containerEl)
+			.setName("Preferences")
+			.setHeading()
 		// 功能: 单击打开文件功能拦截
 		new Setting(containerEl)
 			.setName("Enable file click interceptor")
@@ -66,9 +68,9 @@ export class CardBookmarkSettingTab extends PluginSettingTab {
 		// 功能: 指定阻止打开的文件类型
 		new Setting(containerEl)
 			.setName("Blocked file extensions")
-			.setDesc("Enter file extensions separated by commas, such as pdf,zip. Leave empty to block nothing.")
+			.setDesc("Enter a comma-separated list of extensions. Leave empty to block nothing.")
 			.addText((text) => text
-				.setPlaceholder("pdf,zip")
+				.setPlaceholder("Extension list")
 				.setValue(this.plugin.settings.blockedFileExtensions)
 				.onChange(async (value) => {
 					this.plugin.settings.blockedFileExtensions = value;

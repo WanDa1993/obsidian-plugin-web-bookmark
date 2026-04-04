@@ -1,6 +1,5 @@
 import {Editor, Menu, Notice, Plugin, setIcon} from "obsidian";
 import {CreateLinkBookmarkModal} from "./modal";
-import iconAndroid from "./assets/ic_android.svg"
 
 interface LinkBookmarkBean {
 
@@ -146,7 +145,7 @@ export default class LinkBookmarkFeature {
 		} else if (fileType === '.zip') {
 			setIcon(iconEl, 'file-archive')
 		} else if (fileType === '.apk') {
-			iconEl.innerHTML = iconAndroid
+			setIcon(iconEl, 'file')
 		} else {
 			setIcon(iconEl, 'link')
 		}
@@ -201,7 +200,7 @@ export default class LinkBookmarkFeature {
 		try {
 			const url = new URL(link)
 			return url.hostname
-		} catch (e) {
+		} catch {
 			return link
 		}
 	}
@@ -216,7 +215,7 @@ export default class LinkBookmarkFeature {
 			const lastDotIndex = path.lastIndexOf(".")
 			if (lastDotIndex === -1) return ""
 			return path.slice(lastDotIndex).toLowerCase()
-		} catch (e) {
+		} catch {
 			return ""
 		}
 	}

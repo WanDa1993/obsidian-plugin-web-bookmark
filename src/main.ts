@@ -27,7 +27,7 @@ export default class BookmarkPlugin extends Plugin {
 
 	async onload() {
 		// 设置页面
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.settings = await this.loadSettings()
 		this.addSettingTab(new CardBookmarkSettingTab(this.app, this));
 
 		// 功能加载
@@ -36,4 +36,8 @@ export default class BookmarkPlugin extends Plugin {
 		this.fileBookmarkFeature.onload()
 	}
 
+	private async loadSettings(): Promise<BookmarkSettings> {
+		const savedSettings = await this.loadData() as Partial<BookmarkSettings> | null
+		return Object.assign({}, DEFAULT_SETTINGS, savedSettings ?? {})
+	}
 }
