@@ -1,3 +1,4 @@
+import {shell} from "electron";
 import {Editor, FileSystemAdapter, Menu, normalizePath, Notice, Plugin, setIcon, TFile} from "obsidian";
 import {CreateFileBookmarkModal} from "./modal";
 import process from "process";
@@ -179,7 +180,6 @@ export default class FileBookmarkFeature {
 						const adapter = this.plugin.app.vault.adapter
 						if (adapter instanceof FileSystemAdapter) {
 							const fullPath = adapter.getFullPath(fileDir.path)
-							const {shell} = require("electron")
 							await shell.openPath(fullPath)
 						} else {
 							new Notice("Failed to open the folder.")
@@ -200,7 +200,6 @@ export default class FileBookmarkFeature {
 						const adapter = this.plugin.app.vault.adapter
 						if (adapter instanceof FileSystemAdapter) {
 							const fullPath = adapter.getFullPath(file.path)
-							const {shell} = require("electron")
 							await shell.openPath(fullPath)
 						} else {
 							new Notice("Failed to open the file.")
